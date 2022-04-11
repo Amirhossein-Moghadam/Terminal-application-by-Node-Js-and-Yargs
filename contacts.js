@@ -4,7 +4,9 @@ const chalk = require("chalk");
 const addContact = (fullname, phone, email) => {
   const contacts = loadContacts();
   const duplicateContacts = contacts.find(
-    (c) => c.fullname === fullname && c.phone === phone
+    (c) =>
+      c.fullname.toLocaleLowerCase() === fullname.toLocaleLowerCase() &&
+      c.phone === phone
   );
   if (!duplicateContacts) {
     contacts.push({ fullname, phone, email: email || "" });
@@ -44,7 +46,9 @@ const listContacts = () => {
 
 const removeContacts = (fullname) => {
   const contacts = loadContacts();
-  const filteredContacts = contacts.filter((c) => c.fullname !== fullname);
+  const filteredContacts = contacts.filter(
+    (c) => c.fullname.toLocaleLowerCase() !== fullname.toLocaleLowerCase()
+  );
   if (contacts.length > filteredContacts.length) {
     console.log(chalk.green(`${fullname} has been removed.`));
   } else {
